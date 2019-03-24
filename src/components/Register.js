@@ -1,8 +1,9 @@
 import React from "react";
 
 import {
-    Form, Input, Button,
+    Form, Input, Button, message
 } from 'antd';
+import { API_ROOT } from '../constants';
 
 class RegistrationForm extends React.Component {
     state = {
@@ -16,6 +17,25 @@ class RegistrationForm extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
+            // Fire api call
+            fetch(`${API_ROOT}/signup`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: values.username,
+                    password: values.password
+                })
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    throw new Error(response.statusText);
+                })
+                .then(() => message.info("Registeration suceeded!"))
+                .catch((err) => {
+                    message.error("Registeration Failed!");
+                    console.log(err);
+                })
         });
     }
 
