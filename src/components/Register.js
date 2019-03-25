@@ -89,9 +89,7 @@ class RegistrationForm extends React.Component {
 
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit} className='register'>
-                <Form.Item
-                    label="Username"
-                >
+                <Form.Item label="Username">
                     {getFieldDecorator('username', {
                         rules: [{
                             required: true, message: 'Please input your username!',
@@ -100,9 +98,7 @@ class RegistrationForm extends React.Component {
                         <Input />
                     )}
                 </Form.Item>
-                <Form.Item
-                    label="Password"
-                >
+                <Form.Item label="Password">
                     {getFieldDecorator('password', {
                         rules: [{
                             required: true, message: 'Please input your password!',
@@ -113,9 +109,7 @@ class RegistrationForm extends React.Component {
                         <Input type="password" />
                     )}
                 </Form.Item>
-                <Form.Item
-                    label="Confirm Password"
-                >
+                <Form.Item label="Confirm Password">
                     {getFieldDecorator('confirm', {
                         rules: [{
                             required: true, message: 'Please confirm your password!',
