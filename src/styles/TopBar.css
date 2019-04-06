@@ -9,12 +9,18 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    /* text-align: left; */
 }
 
 .App-title {
     font-size: 1.5em;
     color: #61dafb;
+}
+
+.Logout {
+    margin-left: auto;
+    font-size: 1.5em;
+    color: #61dafb;
+    margin-right: 1em;
 }
 
 @keyframes App-logo-spin {

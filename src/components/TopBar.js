@@ -10,6 +10,11 @@ export class TopBar extends React.Component {
                 <Link to="/home">
                     <span className="App-title">Around</span>
                 </Link>
+                <span className="Logout">
+                    {
+                        this.props.isLoggedIn ? <Link onClick={this.props.handleLogout} to='/login'>Logout</Link> : null
+                    }
+                </span>
             </header>
         );
     }
