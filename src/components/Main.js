@@ -6,7 +6,6 @@ import { Home } from './Home';
 
 export class Main extends React.Component {
     render() {
-        // const myStyle = { textDecoration: 'line-through underline', textTransform: 'lowercase' };
         return (
             <div className="main">
                 <Switch>
@@ -15,6 +14,10 @@ export class Main extends React.Component {
                     <Route path="/home" component={Home} />
                     <Route component={Login} />
                 </Switch>
+
+                <Link to="/register">Register</Link><br />
+                <Link to="/login">Login</Link><br />
+                <Link to="/home">Home</Link>
             </div>
         );
     }

@@ -32,7 +32,10 @@ class RegistrationForm extends React.Component {
                     }
                     throw new Error(response.statusText);
                 })
-                .then(() => message.info("Registeration suceeded!"))
+                .then(() => {
+                    message.info("Registeration suceeded!")
+                    this.props.history.push("/login");
+                })
                 .catch((err) => {
                     message.error("Registeration Failed!");
                     console.log(err);
@@ -124,7 +127,7 @@ class RegistrationForm extends React.Component {
 
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
-                    <br />Or <Link to="/login">back to login</Link><br />
+                    <p>Alread registered? <Link to="/login">Back to login</Link></p>
                 </Form.Item>
             </Form>
         );

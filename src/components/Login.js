@@ -1,6 +1,6 @@
 import React from 'react';
 import { API_ROOT } from '../constants';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import {
     Form, Icon, Input, Button, message,
@@ -30,6 +30,7 @@ class NormalLoginForm extends React.Component {
                     .then((data) => {
                         message.info("Login successfully!");
                         console.log(data);
+                        this.props.history.push("/home");
                     })
                     .catch((err) => {
                         message.error("Login Failed!");
