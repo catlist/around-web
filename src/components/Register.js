@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
     Form, Input, Button, message
@@ -123,6 +124,7 @@ class RegistrationForm extends React.Component {
 
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
+                    <br />Or <Link to="/login">back to login</Link><br />
                 </Form.Item>
             </Form>
         );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { API_ROOT } from '../constants';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import {
     Form, Icon, Input, Button, message,
@@ -60,7 +61,7 @@ class NormalLoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Log in
                     </Button>
-                    Or <a href="">register now!</a>
+                    Or <Link to="/register">register now!</Link><br />
                 </Form.Item>
             </Form>
         );
