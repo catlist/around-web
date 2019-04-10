@@ -1,6 +1,7 @@
 import React from 'react';
 import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY } from '../constants';
 import { Tabs, Button, Spin } from 'antd';
+import { Gallery } from './Gallery';
 
 const TabPane = Tabs.TabPane;
 const operations = <Button>Extra Action</Button>;
@@ -13,7 +14,7 @@ export class Home extends React.Component {
         posts: []
     };
 
-    componentDidMount () {
+    componentDidMount() {
         if ("geolocation" in navigator) {
             this.setState({
                 isLoadingGeolocation: true,
@@ -60,7 +61,15 @@ export class Home extends React.Component {
         } else if (isLoadingPosts) {
             return <Spin tip="Loading Post" />;
         } else if (posts && posts.length > 0) {
-            return "Nearby posts";
+            const images = posts.map(({ user, url, message }) => ({
+                user,
+                src: url,
+                thumbnail: url,
+                caption: message,
+                thumbnailWidth: 400,
+                thumbnailHeight: 300
+            }));
+            return <Gallery images={images} />;
         } else {
             return "Image Posts";
         }
@@ -97,7 +106,7 @@ export class Home extends React.Component {
             });
     }
 
-    render () {
+    render() {
         return (
             <Tabs className='main-tabs' defaultActiveKey="1" tabBarExtraContent={operations}>
                 <TabPane tab="Image Posts" key="1">
