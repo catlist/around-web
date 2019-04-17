@@ -1,10 +1,10 @@
 import React from 'react';
 import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY } from '../constants';
-import { Tabs, Button, Spin } from 'antd';
+import { CreatePostButton } from './CreatePostButton';
 import { Gallery } from './Gallery';
+import { Tabs, Spin } from 'antd';
 
 const TabPane = Tabs.TabPane;
-const operations = <Button>Extra Action</Button>;
 
 export class Home extends React.Component {
     state = {
@@ -107,6 +107,7 @@ export class Home extends React.Component {
     }
 
     render() {
+        const operations = <CreatePostButton />;
         return (
             <Tabs className='main-tabs' defaultActiveKey="1" tabBarExtraContent={operations}>
                 <TabPane tab="Image Posts" key="1">
