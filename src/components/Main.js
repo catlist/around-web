@@ -5,19 +5,19 @@ import { Login } from './Login';
 import { Home } from './Home';
 
 export class Main extends React.Component {
-    getLogin = (props) => {
+    getLogin = () => {
         return this.props.isLoggedIn ?
             <Redirect to="/home" /> :
-            <Login history={props.history} handleLogin={this.props.handleLogin} isLoggedIn={this.props.isLoggedIn} />;
+            <Login handleLogin={this.props.handleLogin} />;
     }
 
-    getHome = (props) => {
+    getHome = () => {
         return this.props.isLoggedIn ?
             <Home /> :
             <Redirect to="/login" />;
     }
 
-    render () {
+    render() {
         return (
             <div className="main">
                 <Switch>

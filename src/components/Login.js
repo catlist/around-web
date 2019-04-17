@@ -27,9 +27,9 @@ class NormalLoginForm extends React.Component {
                         throw new Error(response.statusText);
                     })
                     .then((data) => {
-                        message.info("Login successfully!");
                         console.log(data);
                         this.props.handleLogin(data);
+                        message.info("Login successfully!");
                     })
                     .catch((err) => {
                         message.error("Login Failed!");
@@ -68,4 +68,4 @@ class NormalLoginForm extends React.Component {
     }
 }
 
-export const Login = Form.create({ name: 'LoginForm' })(NormalLoginForm);
+export const Login = Form.create()(NormalLoginForm);
