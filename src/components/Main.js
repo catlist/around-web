@@ -21,13 +21,12 @@ export class Main extends React.Component {
         return (
             <div className="main">
                 <Switch>
+                    <Route exact path="/" component={this.getLogin} />
                     <Route path="/register" component={Register} />
                     <Route path="/login" render={this.getLogin} />
                     <Route path="/home" render={this.getHome} />
-                    <Route component={Login} />
+                    <Route render={this.getLogin} />
                 </Switch>
-
-                {/* <Link to="/home">Home</Link> */}
             </div>
         );
     }

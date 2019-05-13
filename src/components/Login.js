@@ -11,7 +11,6 @@ class NormalLoginForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 // Fire Login request
                 fetch(`${API_ROOT}/login`, {
                     method: 'POST',
@@ -27,7 +26,6 @@ class NormalLoginForm extends React.Component {
                         throw new Error(response.statusText);
                     })
                     .then((data) => {
-                        console.log(data);
                         this.props.handleLogin(data);
                         message.info("Login successfully!");
                     })

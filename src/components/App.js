@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TopBar } from './TopBar';
 import { Main } from './Main';
 import { TOKEN_KEY } from '../constants';
+import { message } from 'antd';
 
 class App extends Component {
   state = {
@@ -16,6 +17,7 @@ class App extends Component {
   handleLogout = () => {
     this.setState({ isLoggedIn: false });
     localStorage.removeItem(TOKEN_KEY);
+    message.info("Logout successfully!");
   }
 
   render() {
@@ -23,13 +25,11 @@ class App extends Component {
       <div className="App">
         <TopBar
           isLoggedIn={this.state.isLoggedIn}
-          handleLogin={this.handleLogin}
           handleLogout={this.handleLogout}
         />
         <Main
           isLoggedIn={this.state.isLoggedIn}
           handleLogin={this.handleLogin}
-          handleLogout={this.handleLogout}
         />
       </div>
     );
