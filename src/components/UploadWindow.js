@@ -1,36 +1,61 @@
 import React from 'react';
-import { Upload, Icon, message } from 'antd';
+import { Upload, Icon, Form, Input } from 'antd';
 
 const Dragger = Upload.Dragger;
 
-const props = {
-    name: 'file',
-    multiple: true,
-    action: '//jsonplaceholder.typicode.com/posts/',
-    onChange(info) {
-        const status = info.file.status;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+class NormUploadWindow extends React.Component {
+    normFile = (e) => {
+        console.log("Upload Event: ", e);
+        // if (Array.isArray(e)) {
+        //     console.log("is array.");
+        //     return e;
+        // }
+        return e && e.fileList;
+    };
 
-export class UploadWindow extends React.Component {
+    beforeUpload = () => false;
 
-    render() {
+    render () {
+        const { getFieldDecorator } = this.props.form;
+
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol: { span: 14 },
+        };
+
+        const props = {
+            name: 'file',
+            multiple: true,
+            beforeUpload: this.beforeUpload
+        };
+
         return (
-            <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
-            </Dragger>
+            <Form>
+                <Form.Item {...formItemLayout} label='Message:'>
+                    {getFieldDecorator('message', {
+                        rules: [{ required: true, message: 'Please input your message!' }],
+                    })(
+                        <Input placeholder="Please input your message" />
+                    )}
+                </Form.Item>
+
+                <Form.Item {...formItemLayout} label='Upload:'>
+                    {getFieldDecorator('upload', {
+                        getValueFromEvent: this.normFile,
+                        rules: [{ required: true, message: 'Please upload a file!' }],
+                    })(
+                        <Dragger {...props}>
+                            <p className="ant-upload-drag-icon">
+                                <Icon type="inbox" />
+                            </p>
+                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                            <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+                        </Dragger>
+                    )}
+                </Form.Item>
+            </Form >
+
         );
     }
 }
+export const UploadWindow = Form.create({ name: 'UploadWindow' })(NormUploadWindow);
