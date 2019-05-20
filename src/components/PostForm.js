@@ -5,17 +5,16 @@ const Dragger = Upload.Dragger;
 
 class NormUploadWindow extends React.Component {
     normFile = (e) => {
-        console.log("Upload Event: ", e);
-        // if (Array.isArray(e)) {
-        //     console.log("is array.");
-        //     return e;
-        // }
+        if (Array.isArray(e)) {
+            console.log("is array.");
+            return e;
+        }
         return e && e.fileList;
     };
 
     beforeUpload = () => false;
 
-    render () {
+    render() {
         const { getFieldDecorator } = this.props.form;
 
         const formItemLayout = {
@@ -23,10 +22,10 @@ class NormUploadWindow extends React.Component {
             wrapperCol: { span: 14 },
         };
 
-        const props = {
+        const draggerProps = {
             name: 'file',
-            multiple: true,
-            beforeUpload: this.beforeUpload
+            multiple: false,
+            beforeUpload: this.beforeUpload,
         };
 
         return (
@@ -40,11 +39,11 @@ class NormUploadWindow extends React.Component {
                 </Form.Item>
 
                 <Form.Item {...formItemLayout} label='Upload:'>
-                    {getFieldDecorator('upload', {
+                    {getFieldDecorator('image', {
                         getValueFromEvent: this.normFile,
                         rules: [{ required: true, message: 'Please upload a file!' }],
                     })(
-                        <Dragger {...props}>
+                        <Dragger {...draggerProps}>
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox" />
                             </p>
