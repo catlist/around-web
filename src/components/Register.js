@@ -33,7 +33,7 @@ class RegistrationForm extends React.Component {
                     throw new Error(response.statusText);
                 })
                 .then(() => {
-                    message.info("Registeration suceeded!")
+                    message.success("Registeration suceeded!")
                     this.props.history.push("/login");
                 })
                 .catch((err) => {

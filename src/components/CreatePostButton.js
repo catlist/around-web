@@ -50,7 +50,7 @@ export class CreatePostButton extends React.Component {
                     })
                     .then(() => {
                         this.props.loadNearbyPosts();
-                        message.error("Upload Succeeded!")
+                        message.success("Upload Succeeded!")
                     })
                     .catch((err) => {
                         message.error("Upload Failed!");
