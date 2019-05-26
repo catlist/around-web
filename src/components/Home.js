@@ -1,8 +1,9 @@
 import React from 'react';
-import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY } from '../constants';
+import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY, GOOGLE_MAPS_API_KEY } from '../constants';
 import { CreatePostButton } from './CreatePostButton';
 import { Gallery } from './Gallery';
 import { Tabs, Spin } from 'antd';
+import { AroundMap } from './AroundMap';
 
 const TabPane = Tabs.TabPane;
 
@@ -75,13 +76,38 @@ export class Home extends React.Component {
         }
     }
 
+
+    loadNearbyPostsOnMap = () => {
+        if (localStorage.getItem(POS_KEY) != null) {
+            return (
+                <AroundMap
+                    googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + GOOGLE_MAPS_API_KEY + "&v=3.exp&libraries=geometry,drawing,places"}
+                    loadingElement={
+                        < div style={{
+                            height: `100%`
+                        }
+                        } />
+                    }
+                    containerElement={
+                        < div style={{ height: `400px` }} />
+                    }
+                    mapElement={
+                        < div style={{ height: `100%` }} />
+                    }
+                />
+            )
+        } else {
+            return "Map";
+        }
+    }
+
     loadNearbyPosts = () => {
         this.setState({
             isLoadingPosts: true
         });
         const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
         const token = localStorage.getItem(TOKEN_KEY);
-        fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`, {
+        fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -109,12 +135,14 @@ export class Home extends React.Component {
     render() {
         const operations = <CreatePostButton loadNearbyPosts={this.loadNearbyPosts} />;
         return (
-            <Tabs className='main-tabs' defaultActiveKey="1" tabBarExtraContent={operations}>
+            <Tabs className='main-tabs' defaultActiveKey="1" tabBarExtraContent={operations} >
                 <TabPane tab="Image Posts" key="1">
                     {this.getImagePosts()}
                 </TabPane>
                 <TabPane tab="Video Posts" key="2">Video Posts</TabPane>
-                <TabPane tab="Map" key="3">Map</TabPane>
+                <TabPane tab="Map" key="3">
+                    {this.loadNearbyPostsOnMap()}
+                </TabPane>
             </Tabs>
         );
     }
