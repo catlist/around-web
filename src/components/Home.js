@@ -95,6 +95,7 @@ export class Home extends React.Component {
                         < div style={{ height: `100%` }} />
                     }
                     posts={this.state.posts}
+                    loadNearbyPosts={this.loadNearbyPosts}
                 />
             )
         } else {
@@ -102,13 +103,13 @@ export class Home extends React.Component {
         }
     }
 
-    loadNearbyPosts = () => {
+    loadNearbyPosts = (center, radius = 20) => {
         this.setState({
             isLoadingPosts: true
         });
-        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+        const { lat, lon } = center ? center : JSON.parse(localStorage.getItem(POS_KEY));
         const token = localStorage.getItem(TOKEN_KEY);
-        fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`, {
+        fetch(`${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${radius}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
