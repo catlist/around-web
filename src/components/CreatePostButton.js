@@ -1,7 +1,7 @@
 import React from 'react';
 import { UploadWindow } from './PostForm';
 import { Button, Modal, message } from 'antd';
-import { POS_KEY, TOKEN_KEY, API_ROOT } from '../constants';
+import { POS_KEY, TOKEN_KEY, API_ROOT, LOC_SHAKE } from '../constants';
 
 export class CreatePostButton extends React.Component {
     state = {
@@ -22,8 +22,8 @@ export class CreatePostButton extends React.Component {
                 const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
                 const token = localStorage.getItem(TOKEN_KEY);
                 const formData = new FormData();
-                formData.set('lat', lat);
-                formData.set('lon', lon);
+                formData.set('lat', lat + 2 * Math.random() * LOC_SHAKE - LOC_SHAKE);
+                formData.set('lon', lon + 2 * Math.random() * LOC_SHAKE - LOC_SHAKE);
                 formData.set('message', values.message);
                 formData.set('image', values.image[0].originFileObj);
                 this.setState({

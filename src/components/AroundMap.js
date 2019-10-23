@@ -1,6 +1,7 @@
 import React from 'react';
 import { POS_KEY } from '../constants';
 import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps"
+import { AroundMarker } from './AroundMarker';
 
 class NormalAroundMap extends React.Component {
 
@@ -18,6 +19,9 @@ class NormalAroundMap extends React.Component {
                 defaultZoom={10}
                 defaultCenter={this.getCenter()}
             >
+                {
+                    this.props.posts.map(post => <AroundMarker key={post.url} post={post} />)
+                }
             </GoogleMap >
         );
     }

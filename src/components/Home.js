@@ -94,6 +94,7 @@ export class Home extends React.Component {
                     mapElement={
                         < div style={{ height: `100%` }} />
                     }
+                    posts={this.state.posts}
                 />
             )
         } else {
