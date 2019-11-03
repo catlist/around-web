@@ -53,7 +53,7 @@ export class Home extends React.Component {
 
     }
 
-    getImagePosts = () => {
+    getPanelContent = (type) => {
         const { error, posts, isLoadingGeolocation, isLoadingPosts } = this.state;
         if (error) {
             return error;
@@ -62,7 +62,16 @@ export class Home extends React.Component {
         } else if (isLoadingPosts) {
             return <Spin tip="Loading Post" />;
         } else if (posts && posts.length > 0) {
-            const images = posts.map(({ user, url, message }) => ({
+            return type === 'image' ? this.getImagePosts() : this.getVideoPosts();
+        } else {
+            return null;
+        }
+    }
+
+    getImagePosts = () => {
+        const images = this.state.posts
+            .filter(({ type }) => type === 'image')
+            .map(({ user, url, message }) => ({
                 user,
                 src: url,
                 thumbnail: url,
@@ -70,12 +79,26 @@ export class Home extends React.Component {
                 thumbnailWidth: 400,
                 thumbnailHeight: 300
             }));
-            return <Gallery images={images} />;
-        } else {
-            return "Image Posts";
-        }
+        return <Gallery images={images} />;
     }
 
+    getVideoPosts = () => {
+        const videos = this.state.posts
+            .filter(({ type }) => type === 'video')
+            .map(({ user, url, message }) => {
+                return (
+                    <div style={{ margin: '10px' }}>
+                        <video src={url} controls className="video-block" />
+                        <p>  {`${user}" ${message}"`}</ p >
+                    </div>
+                );
+            });
+        return (
+            <div style={{ display: 'flex' }}>
+                {videos}
+            </div >
+        );
+    }
 
     loadNearbyPostsOnMap = () => {
         if (localStorage.getItem(POS_KEY) != null) {
@@ -139,9 +162,11 @@ export class Home extends React.Component {
         return (
             <Tabs className='main-tabs' defaultActiveKey="1" tabBarExtraContent={operations} >
                 <TabPane tab="Image Posts" key="1">
-                    {this.getImagePosts()}
+                    {this.getPanelContent('image')}
                 </TabPane>
-                <TabPane tab="Video Posts" key="2">Video Posts</TabPane>
+                <TabPane tab="Video Posts" key="2">
+                    {this.getPanelContent('video')}
+                </TabPane>
                 <TabPane tab="Map" key="3">
                     {this.loadNearbyPostsOnMap()}
                 </TabPane>
