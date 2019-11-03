@@ -87,9 +87,9 @@ export class Home extends React.Component {
             .filter(({ type }) => type === 'video')
             .map(({ user, url, message }) => {
                 return (
-                    <div style={{ margin: '10px' }}>
+                    <div key={url} style={{ margin: '10px' }}>
                         <video src={url} controls className="video-block" />
-                        <p>  {`${user}" ${message}"`}</ p >
+                        <p>{`${user}" ${message}"`}</ p >
                     </div>
                 );
             });
