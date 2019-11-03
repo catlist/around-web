@@ -38,14 +38,14 @@ export class AroundMarker extends React.Component {
         const isImagePost = this.props.post.type === 'image';
         const icon = isImagePost ? null : {
             url: blueMarkerUrl,
-            scaledSize: new window.google.maps.Size(45, 40)
+            scaledSize: new window.google.maps.Size(50, 40)
         };
         const { location: { lat, lon: lng }, user, message, url } = this.props.post;
         return (
             <Marker
                 position={{ lat, lng }}
-                onMouseOver={this.toggleOpen}
-                onMouseOut={this.toggleOpen}
+                onMouseOver={isImagePost ? this.toggleOpen : null}
+                onMouseOut={isImagePost ? this.toggleOpen : null}
                 onClick={this.clickOpen}
                 icon={icon}
             >
