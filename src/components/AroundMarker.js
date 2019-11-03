@@ -53,15 +53,32 @@ export class AroundMarker extends React.Component {
                     this.state.isOpen || this.state.clickOpen ?
                         (
                             <InfoWindow onCloseClick={this.onCloseClick}>
-                                <div>
-                                    <img
-                                        className="around-marker-image"
-                                        src={url}
-                                        alt={message}
-                                    />
-                                    <p />
-                                    {`${user} : ${message}`}
-                                </div>
+                                {
+                                    isImagePost ?
+                                        (
+                                            <div>
+                                                <img
+                                                    className="around-marker-image"
+                                                    src={url}
+                                                    alt={message}
+                                                />
+                                                <p />
+                                                {`${user} : ${message}`}
+                                            </div>
+                                        ) :
+                                        (
+                                            <div>
+                                                <video
+                                                    className="around-marker-video"
+                                                    src={url}
+                                                    alt={message}
+                                                    controls
+                                                />
+                                                <p />
+                                                {`${user} : ${message}`}
+                                            </div>
+                                        )
+                                }
                             </InfoWindow>
                         ) : null
                 }

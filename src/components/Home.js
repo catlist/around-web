@@ -112,7 +112,7 @@ export class Home extends React.Component {
                         } />
                     }
                     containerElement={
-                        < div style={{ height: `400px` }} />
+                        < div style={{ height: `700px` }} />
                     }
                     mapElement={
                         < div style={{ height: `100%` }} />
