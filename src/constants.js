@@ -5,6 +5,10 @@ export const POS_KEY = 'POS_KEY';
 export const LOC_SHAKE = 0.02;
 export const GEO_OPTIONS = {
     maximumAge: 60000,
-    timeout: 30000,
+    timeout: 5000,
     enableHighAccuracy: false
+};
+export const DEFAULT_CENTER = {
+    lat: 37.424317,
+    lon: -122.084171
 };

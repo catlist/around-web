@@ -1,5 +1,4 @@
 import React from 'react';
-import { POS_KEY } from '../constants';
 import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps"
 import { AroundMarker } from './AroundMarker';
 
@@ -32,7 +31,7 @@ class NormalAroundMap extends React.Component {
     }
 
     render() {
-        const { lat, lon: lng } = JSON.parse(localStorage.getItem(POS_KEY));
+        const { lat, lng } = this.props.center;
         return (
             <GoogleMap
                 ref={this.getMapRef}

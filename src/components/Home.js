@@ -1,5 +1,5 @@
 import React from 'react';
-import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY, GOOGLE_MAPS_API_KEY } from '../constants';
+import { GEO_OPTIONS, API_ROOT, TOKEN_KEY, POS_KEY, DEFAULT_CENTER, GOOGLE_MAPS_API_KEY } from '../constants';
 import { CreatePostButton } from './CreatePostButton';
 import { Gallery } from './Gallery';
 import { Tabs, Spin } from 'antd';
@@ -9,7 +9,6 @@ const TabPane = Tabs.TabPane;
 
 export class Home extends React.Component {
     state = {
-        error: "",
         isLoadingGeolocation: false,
         isLoadingPosts: false,
         posts: []
@@ -25,10 +24,6 @@ export class Home extends React.Component {
                 this.onFailedLoadGeolocation,
                 GEO_OPTIONS
             )
-        } else {
-            this.setState({
-                error: "Geolocation is not supported by browser."
-            });
         }
     }
 
@@ -44,20 +39,17 @@ export class Home extends React.Component {
         this.loadNearbyPosts();
     }
 
-    d = (error) => {
+    onFailedLoadGeolocation = (error) => {
         this.setState({
-            isLoadingGeolocation: false,
-            error: "Error in getting geolocation."
+            isLoadingGeolocation: false
         });
         console.log(error);
-
+        this.loadNearbyPosts(DEFAULT_CENTER);
     }
 
     getPanelContent = (type) => {
-        const { error, posts, isLoadingGeolocation, isLoadingPosts } = this.state;
-        if (error) {
-            return error;
-        } else if (isLoadingGeolocation) {
+        const { posts, isLoadingGeolocation, isLoadingPosts } = this.state;
+        if (isLoadingGeolocation) {
             return <Spin tip="Loading Geolocation..." />;
         } else if (isLoadingPosts) {
             return <Spin tip="Loading Post" />;
@@ -101,32 +93,32 @@ export class Home extends React.Component {
     }
 
     loadNearbyPostsOnMap = () => {
-        if (localStorage.getItem(POS_KEY) != null) {
-            return (
-                <AroundMap
-                    googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + GOOGLE_MAPS_API_KEY + "&v=3.exp&libraries=geometry,drawing,places"}
-                    loadingElement={
-                        < div style={{
-                            height: `100%`
-                        }
-                        } />
+        const { lat, lon: lng } = localStorage.getItem(POS_KEY) != null ? JSON.parse(localStorage.getItem(POS_KEY)) : DEFAULT_CENTER;
+        const center = { lat, lng };
+
+        return (
+            <AroundMap
+                googleMapURL={"https://maps.googleapis.com/maps/api/js?key=" + GOOGLE_MAPS_API_KEY + "&v=3.exp&libraries=geometry,drawing,places"}
+                loadingElement={
+                    < div style={{
+                        height: `100%`
                     }
-                    containerElement={
-                        < div style={{ height: `700px` }} />
-                    }
-                    mapElement={
-                        < div style={{ height: `100%` }} />
-                    }
-                    posts={this.state.posts}
-                    loadNearbyPosts={this.loadNearbyPosts}
-                />
-            )
-        } else {
-            return "Map";
-        }
+                    } />
+                }
+                containerElement={
+                    < div style={{ height: `700px` }} />
+                }
+                mapElement={
+                    < div style={{ height: `100%` }} />
+                }
+                posts={this.state.posts}
+                center={center}
+                loadNearbyPosts={this.loadNearbyPosts}
+            />
+        )
     }
 
-    loadNearbyPosts = (center, radius = 20) => {
+    loadNearbyPosts = (center, radius = 50) => {
         this.setState({
             isLoadingPosts: true
         });
